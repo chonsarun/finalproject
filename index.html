@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <style>
     .addskill {
@@ -48,6 +49,12 @@
         background-color: #f44336;
         color: white;
     }
+
+    li span {
+        margin: 0 0 0 1rem;
+        background: violet;
+        color: white;
+    }
 </style>
 
 <body class="w3-flat-midnight-blue">
@@ -56,14 +63,14 @@
             <div class="w3-third">
                 <div class="w3-white w3-text-blue-grey w3-card-4">
                     <div class="w3-display-container">
-                        <img src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/10815_1494154314205372_2962165674886799540_n.jpg?_nc_cat=108&_nc_oc=AQlJgrY2U2856xQopp7B2-YXKs-RbplEy-gCGv05lTjS5GoolrPhy11GYjK3TE6wKRI&_nc_ht=scontent.fbkk10-1.fna&oh=47c8521219bf22bc90da79e56665c76d&oe=5E63526B"
-                            style="width: 100%;" alt="chonsarun yamkamang">
+                        <img title="mouse over random background-color"src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/10815_1494154314205372_2962165674886799540_n.jpg?_nc_cat=108&_nc_oc=AQlJgrY2U2856xQopp7B2-YXKs-RbplEy-gCGv05lTjS5GoolrPhy11GYjK3TE6wKRI&_nc_ht=scontent.fbkk10-1.fna&oh=47c8521219bf22bc90da79e56665c76d&oe=5E63526B"
+                            style="width: 100%;" alt="chonsarun yamkamang" onmouseover="randomBackgroundColor()">
 
                     </div>
                     <div class="w3-container">
                         <h1>Info</h1>
                         <hr>
-                        <p><i class="fa fa-address-book w3-margin-right w3-large"></i> chonsarun yamkamang</p>
+                        <p title="click change name"><i class="fa fa-address-book w3-margin-right w3-large"></i> <span id="name"onclick="changeValue()">chonsarun yamkamang </span></p>
                         <p><i class="fa fa-home w3-margin-right w3-large"></i> Lopburi</p>
                         <p><i class="fa fa-envelope w3-margin-right w3-large"></i>chonsarun2494@gmail.com</p>
                     </div>
@@ -86,8 +93,10 @@
                     <div class="w3-container">
                         <h1>Skill</h1>
                         <hr>
-                        <input type="text" placeholder="add new Skill"><span class="addskill">Add Skill</span>
-                        <ul>
+                        <input type="text" placeholder="add new Skill" id="InputSkill"><span class="addskill"
+                            onclick="newElement()">Add
+                            Skill</span>
+                        <ul id="myUL">
                             <li>network</li>
                             <li>php</li>
                             <li>python</li>
@@ -103,7 +112,67 @@
     </div>
     <!-- end left -->
     <!-- education -->
+    <script>
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
+        // Click on a close button to hide the current list item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
 
+        function newElement() {
+            var li = document.createElement("li");
+            var inputValue = document.getElementById("InputSkill").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("กรอกสกิลด่วน");
+            } else {
+                document.getElementById("myUL").appendChild(li);
+            }
+            document.getElementById("InputSkill").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+        }
+        function randomBackgroundColor() {
+            var colors = ["w3-flat-turquoise","w3-flat-green-sea","w3-flat-emerald","w3-flat-peter-river","w3-flat-belize-hole","w3-flat-wet-asphalt"]
+            var color = colors[Math.floor(Math.random() * colors.length)];
+           // alert(color)
+           // document.body.style.backgroundColor = color;
+           //document.body.className = document.body.className.replace(color);
+           $("body").removeClass();
+           $("body").addClass(color)
+        }
+        function changeValue(){
+            let name = prompt("Please enter your new name", document.getElementById("name").innerText);
+            if(name!=null){
+                document.getElementById("name").innerHTML = name
+            }
+        }
+    </script>
 </body>
 
 </html>
